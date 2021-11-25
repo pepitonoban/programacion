@@ -1,0 +1,217 @@
+DIJKSTRA
+
+Necesito:
+w
+Vector distancias
+Vector predecesores
+Lista Conjunto S
+Lista conjunto V-s
+
+Por parametro:
+Nodo inicial
+Matriz -> grafo
+
+Pongo nodo inicial en conjunto S, el resto en V-s
+Obtengo matriz adyacencia del nodo inicial
+Inicializo Vector distancias y vector predecesores
+Mientras el vector V-S tenga valores
+	w = busco el nodo de V-S que tenga menor distancia a otro nodo (Peso de arista) -> metodo a parte
+	Obtengo matriz de adyacencia de W
+	Agrego W a S y saco W de v-S
+	Para cada nodo del conjunto V-S
+		Me quedo con el minimo entre (la distancia Actual al nodo) y (la distancia 
+		a W + de W al nodo).
+		Si cambie la distancia, cambio el predecesor
+
+PRIM
+
+Necesito:
+
+matriz -> parametro
+Conjunto de nodos del grafo (G)
+Conjunto de nodos del Minimal spanning tree (Arbol abarcador de costo minimo) (MST)
+Costo Total
+matrizResultado (Arbol).
+
+El siguiente Prim siempre comienza por el nodo 0:
+
+Agrego el nodo 0 a el conjunto mst
+Agrego todos los demas nodos al conjunto G
+Mientras el conjunto G no este vacio:
+	Reseteo el minimo y el nodo inicio
+	Para cada nodo en el conjunto mst
+		Obtengo los adyacentes
+		Para cada nodo en el conjunto G
+			Busco el menor de los adyacentes a los nodos del conjunto MST
+			pero que no esten en el conjunto G
+			Guardo el costo de ese menor
+			Guardo desde donde llego (En sintesis, guardo todo el camino)
+	Sumo el costo encontrado al costo total
+	Guardo el costo en la matriz(arbol) -> recordar simetria
+	Agrego el nodo encontrado al conjunto MST
+	Saco el nodo encontrado del conjunto G
+seteo el costo minimo de la matriz resultado
+
+
+
+DFS:
+
+Necesito:
+
+arbol resultante (Matriz)
+matriz de adyacencia
+Lista de nodos visitados
+Pila de nodos
+
+
+Inicializo la lista de nodos visitados en false (Grafo.lenght)
+Mientras quede algun nodo sin visitar
+	mientras la pila de nodos no este vacia
+		saco de la pila
+		obtengo los adyacentes del que saque
+		Para cada elemento de la matriz de adyacencia
+			Si es adyacente y no lo visite, seteo que lo visite
+			lo agrego a la pila y armo el arbol.
+	Para cada elemento del grafo:
+		Si me quedo algun elemento sin visitar
+		Lo agrego a la pila, lo seteo en visitado y corto
+		el ciclo
+
+
+
+KRUSKAL:
+
+Necesito: 
+matriz
+Lista de aristas -> (Nodo desde, Nodo hacia, Costo)
+Estructura Union find
+cantNodos
+costoMinimo
+
+Creo e inicializo la cola de prioridad con las aristas. (Quedan ordenadas en forma creciente por costo)
+Reseteo i
+Mientras i sea menor a la cantidad de nodos - 1
+	saco una arista de la cola
+	hago find del origen y destino de la arista (Guardo)
+	si el origen y el destino son distintos
+		aumento i
+		hago union 
+		conectoNodos
+		acumulo en costo minimo
+Seteo costo minimo 
+
+UNION FIND
+
+Cuando creo el union find cargo la cant Nodos y cargo un vector con los representantes
+de los nodos (en un principio cada representaste es el nodo.. 0,1,2,3..)
+
+Metodo find: Dado un nodo busco el representante de dicho nodo, para encontrar el representante
+deberia tenerse como representante a si mismo
+
+Metodo Union: 
+Si el representante origen es mas chico que el destino:
+	Guardo en la posicion del destino, el origen
+	sino
+	Guardo en la posicion del Origen, el destino
+O sea que me va a quedar el mas chico como representante de si mismo
+
+
+COLOREO WELSH POWELL
+Necesito:
+
+matriz de adyacencia
+cant de nodos
+(En realidad deberia mandarle que tipo de coloring usa (Por color/Nodo)
+y el vector ya ordenado dependiendo el metodo usado (Welsh Powell)
+
+Inicializo el vector de elementos a colorear (metodo hallar grados)
+Ordeno el vector dependiendo de que metodo quiero usar... WElsh powell
+Mientras queden nodos sin colorear
+	Saco de la lista el primer nodo
+	Obtengo la matriz de adyacencia de dicho nodo
+	Para cada color en el vector de colores
+		Para cada nodo 
+			Si el nodo actual tiene algun color repetido
+			con alguno de sus adyacentes
+			Corto el ciclo y seteo que el color se uso
+		Si el color no coincidia con ninguno de los adyacentes
+		agrego ese nodo a ese color y seteo que ya encontre color
+		Tambien corto el ciclo
+	Si no encontro color, hay que crear un color nuevo
+	Creo el color y agrego el nodo al color.
+
+COLOR
+
+Necesito una lista con los nodos de ese color
+el color
+cantidad de colores (static)
+
+constructor que tambien asigne el nodo al color
+
+metodo para agregar nodo a un color
+
+metodo para saber si un nodo tiene el color
+
+NODO -> comparable.
+
+nodo
+grado
+Constructor que asigna nodo y grado
+Comparador que compara por grado
+getters y setters
+
+3
+Nodo [nodo=5, grado=5]
+Nodo [nodo=4, grado=3]
+Nodo [nodo=7, grado=2]
+ --------- 
+Nodo [nodo=6, grado=3]
+Nodo [nodo=8, grado=3]
+Nodo [nodo=0, grado=2]
+Nodo [nodo=3, grado=2]
+ --------- 
+Nodo [nodo=9, grado=3]
+Nodo [nodo=1, grado=2]
+Nodo [nodo=2, grado=2]
+ --------- 
+
+3
+Nodo [nodo=5, grado=5]
+Nodo [nodo=8, grado=3]
+Nodo [nodo=3, grado=2]
+Nodo [nodo=1, grado=2]
+ --------- 
+Nodo [nodo=9, grado=3]
+Nodo [nodo=4, grado=3]
+Nodo [nodo=7, grado=2]
+Nodo [nodo=2, grado=2]
+Nodo [nodo=0, grado=2]
+ --------- 
+Nodo [nodo=6, grado=3]
+ --------- 
+
+Nodo [nodo=5, grado=5]
+Nodo [nodo=4, grado=3]
+Nodo [nodo=6, grado=3]
+Nodo [nodo=8, grado=3]
+Nodo [nodo=9, grado=3]
+Nodo [nodo=0, grado=2]
+Nodo [nodo=1, grado=2]
+Nodo [nodo=2, grado=2]
+Nodo [nodo=3, grado=2]
+Nodo [nodo=7, grado=2]
+
+Nodo [nodo=5, grado=5]
+Nodo [nodo=9, grado=3]
+Nodo [nodo=8, grado=3]
+Nodo [nodo=6, grado=3]
+Nodo [nodo=4, grado=3]
+Nodo [nodo=7, grado=2]
+Nodo [nodo=3, grado=2]
+Nodo [nodo=2, grado=2]
+Nodo [nodo=1, grado=2]
+Nodo [nodo=0, grado=2]
+
+
+	
+
